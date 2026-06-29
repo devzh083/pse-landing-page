@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Choose the School (BEM: .school-grid / .school-card)
+   Desktop: static 4-column CSS Grid.
+   Mobile: same DOM becomes a native CSS scroll-snap slider — no JS
+   structural branching needed, only the dot-sync logic (school-slider.js).
+   ========================================================================== */
+
+.school-grid {
+  padding-block: var(--space-xl);
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: var(--container-padding);
+}
+
+.school-grid__heading {
+  text-align: center;
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-lg);
+}
+
+.school-grid__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.school-card {
+  position: relative;
+  height: 0;
+  /* 3:4 ratio via the padding-bottom technique (intrinsic-ratio fallback
+     for validators that don't yet recognize aspect-ratio) */
+  padding-bottom: 133.333%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.school-card__image {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.school-card__overlay {
+  position: absolute;
+  top: auto; right: 0; bottom: 0; left: 0;
+  padding: var(--space-md);
+  background: linear-gradient(180deg, transparent, rgba(0, 14, 56, 0.92) 70%);
+  color: #fff;
+}
+
+.school-card__title {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--space-2xs);
+}
+
+.school-card__copy {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.school-grid__dots {
+  display: none;
+  justify-content: center;
+  gap: var(--space-2xs);
+  margin-top: var(--space-md);
+}
+
+@media (max-width: 900px) {
+  .school-grid__viewport { margin-left: calc(var(--container-padding) * -1); margin-right: calc(var(--container-padding) * -1); }
+
+  .school-grid__list {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--container-padding);
+    padding-inline: var(--container-padding);
+    /* Hide native scrollbar while remaining fully keyboard/touch scrollable */
+  }
+
+  .school-grid__list::-webkit-scrollbar { display: none; }
+
+  .school-grid__item { scroll-snap-align: start; }
+
+  .school-grid__dots { display: flex; }
+}
+
+.school-grid__dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background var(--duration-fast) var(--ease-base), transform var(--duration-fast) var(--ease-base);
+}
+
+.school-grid__dot[aria-selected="true"] {
+  background: var(--color-purple);
+  transform: scale(1.2);
+}

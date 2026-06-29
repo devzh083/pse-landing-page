@@ -1,0 +1,100 @@
+/* ==========================================================================
+   "What Makes This Exhibition a Must-Visit" slider
+   (BEM: .exhibition-slider / .exhibition-card)
+   Same native scroll-snap technique as the school-grid slider, with
+   visible prev/next arrows since this section has no static desktop
+   grid fallback — it's a slider at every breakpoint.
+   ========================================================================== */
+
+.exhibition-slider {
+  padding-block: var(--space-xl);
+  background: #fafaff;
+}
+
+.exhibition-slider__heading {
+  text-align: center;
+  font-size: var(--fs-h2);
+  max-width: 30ch;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-lg);
+  padding-inline: var(--container-padding);
+}
+
+.exhibition-slider__viewport {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.exhibition-slider__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(15rem, 1fr);
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--container-padding);
+  padding-inline: var(--container-padding);
+}
+
+.exhibition-slider__list::-webkit-scrollbar { display: none; }
+
+.exhibition-slider__item { scroll-snap-align: start; }
+
+.exhibition-card {
+  height: 100%;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.exhibition-card__icon { font-size: 2rem; }
+
+.exhibition-card__title { font-size: var(--fs-h3); }
+
+.exhibition-card__copy {
+  font-size: var(--fs-small);
+  color: rgba(0, 14, 56, 0.7);
+}
+
+.exhibition-slider__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.exhibition-slider__arrow {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: #fff;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exhibition-slider__dots {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.exhibition-slider__dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+.exhibition-slider__dot[aria-selected="true"] {
+  background: var(--color-navy);
+  transform: scale(1.2);
+}

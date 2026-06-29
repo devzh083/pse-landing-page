@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Appointment CTA (BEM: .appointment-cta)
+   ========================================================================== */
+
+.appointment-cta {
+  background: var(--gradient-cta);
+  padding-block: var(--space-xl);
+}
+
+.appointment-cta__inner {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: var(--container-padding);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.appointment-cta__eyebrow {
+  font-weight: 600;
+  color: var(--color-purple);
+  margin-bottom: var(--space-2xs);
+}
+
+.appointment-cta__heading {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-sm);
+}
+
+.appointment-cta__text {
+  max-width: 36ch;
+  color: rgba(0, 14, 56, 0.75);
+}
+
+.appointment-cta__form {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: grid;
+  gap: var(--space-sm);
+  box-shadow: 0 20px 40px -20px rgba(0, 14, 56, 0.3);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form-field__label {
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.form-field__input {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.form-field__input:invalid:not(:placeholder-shown) {
+  border-color: #c0392b;
+}
+
+.form-field__status {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  min-height: 1.25em;
+}
+
+.form-field__status[data-state="success"] { color: #1e7e34; }
+.form-field__status[data-state="error"] { color: #c0392b; }
+
+.appointment-cta__submit { width: 100%; }
+
+@media (max-width: 768px) {
+  .appointment-cta__inner { grid-template-columns: 1fr; }
+}

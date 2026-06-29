@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Hero — dual-axis slider (BEM: .hero)
+   Horizontal axis: .hero__track slides between .hero__slide items.
+   Vertical axis: each slide's .hero__content rises/fades in on activation.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  background: var(--gradient-hero);
+  overflow: hidden;
+}
+
+.hero__viewport {
+  overflow: hidden;
+}
+
+.hero__track {
+  display: flex;
+  width: 100%;
+  transition: transform var(--duration-base) var(--ease-base);
+}
+
+.hero__slide {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: var(--space-lg);
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--space-xl) var(--container-padding);
+}
+
+.hero__content {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  /* Vertical axis of the dual-axis slider: content rises + fades on activation */
+  transform: translateY(1.5rem);
+  opacity: 0;
+  transition: transform var(--duration-base) var(--ease-base), opacity var(--duration-base) var(--ease-base);
+  transition-delay: 0ms;
+}
+
+.hero__slide.is-active .hero__content {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 150ms;
+}
+
+.hero__eyebrow {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.hero__heading {
+  font-size: var(--fs-h1);
+  max-width: 18ch;
+}
+
+.hero__subheading {
+  font-size: var(--fs-body);
+  max-width: 42ch;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero__event-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.hero__media {
+  position: relative;
+  height: 0;
+  /* 1:1 ratio via the padding-bottom technique (intrinsic-ratio fallback
+     for validators that don't yet recognize aspect-ratio) */
+  padding-bottom: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.hero__media img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Controls --- */
+
+.hero__controls {
+  position: absolute;
+  top: auto; right: 0; bottom: var(--space-md); left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.hero__arrow {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-fast) var(--ease-base);
+}
+
+.hero__arrow:hover,
+.hero__arrow:focus-visible {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.hero__dots {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.hero__dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background var(--duration-fast) var(--ease-base), transform var(--duration-fast) var(--ease-base);
+}
+
+.hero__dot[aria-selected="true"] {
+  background: var(--color-gold);
+  transform: scale(1.2);
+}
+
+.hero__play-pause {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__play-pause-icon {
+  display: block;
+  width: 0.6rem;
+  height: 0.7rem;
+  border-style: solid;
+  border-width: 0.35rem 0 0.35rem 0.55rem;
+  border-color: transparent transparent transparent #fff;
+}
+
+.hero__play-pause[aria-pressed="true"] .hero__play-pause-icon {
+  width: 0.55rem;
+  height: 0.7rem;
+  border-style: double;
+  border-width: 0 0 0 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero__slide {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-block: var(--space-lg) calc(var(--space-xl) + 2rem);
+  }
+
+  .hero__content { align-items: center; }
+  .hero__media { order: -1; max-width: 14rem; margin-left: auto; margin-right: auto; }
+}

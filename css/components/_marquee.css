@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Participating-school logo marquee (BEM: .logo-marquee)
+   Continuous "sling" animation, alternating direction per row.
+   Each track is duplicated in the HTML so the loop point is invisible.
+   Pauses on hover/focus; disabled entirely under prefers-reduced-motion.
+   ========================================================================== */
+
+.logo-marquee {
+  padding-block: var(--space-lg);
+  background: #fff;
+  overflow: hidden;
+}
+
+.logo-marquee__head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.logo-marquee__heading {
+  font-size: var(--fs-h2);
+  text-align: center;
+}
+
+/* Explicit, keyboard-operable pause control — required for WCAG 2.2.2
+   (Pause, Stop, Hide) since the logos themselves aren't focusable and
+   hover/focus-within alone wouldn't give keyboard users a way in. */
+.logo-marquee__toggle {
+  position: absolute;
+  right: var(--container-padding);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-navy);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+.logo-marquee__toggle-icon {
+  width: 0.5rem;
+  height: 0.6rem;
+  display: inline-block;
+  border-style: double;
+  border-width: 0 0 0 0.45rem;
+  border-color: var(--color-navy);
+}
+
+.logo-marquee__toggle[aria-pressed="true"] .logo-marquee__toggle-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.3rem 0 0.3rem 0.5rem;
+  border-color: transparent transparent transparent var(--color-navy);
+}
+
+@media (max-width: 600px) {
+  .logo-marquee__head { flex-direction: column; gap: var(--space-sm); }
+  .logo-marquee__toggle { position: static; }
+}
+
+.logo-marquee__row {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  margin-bottom: var(--space-sm);
+}
+
+.logo-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-md);
+  animation: marquee-ltr var(--duration-slow) linear infinite;
+}
+
+.logo-marquee__row--rtl .logo-marquee__track {
+  animation-name: marquee-rtl;
+}
+
+/* Pause on hover or keyboard focus within the row */
+.logo-marquee__row:hover .logo-marquee__track,
+.logo-marquee__row:focus-within .logo-marquee__track,
+.logo-marquee.is-paused .logo-marquee__track {
+  animation-play-state: paused;
+}
+
+.logo-marquee__logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+  padding-inline: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--fs-small);
+  color: var(--color-navy);
+  white-space: nowrap;
+  background: #fafaff;
+}
+
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-rtl {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee__track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .logo-marquee__row {
+    overflow: visible;
+    mask-image: none;
+  }
+
+  /* Hide the duplicated set used only for seamless looping */
+  .logo-marquee__logo[aria-hidden="true"] { display: none; }
+}
